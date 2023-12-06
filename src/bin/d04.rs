@@ -42,4 +42,22 @@ fn main() {
     }
 
     println!("{sum}");
+
+    let mut i_have_cards = cards.iter().map(|_| 1usize).collect_vec();
+
+    for (index, (winners, candidates)) in cards.iter().enumerate() {
+        let num = candidates
+            .iter()
+            .copied()
+            .filter(|c| winners.contains(c))
+            .count();
+
+        let add = i_have_cards[index];
+
+        for offset in 0..num {
+            i_have_cards[index + offset + 1] += add;
+        }
+    }
+
+    println!("{}", i_have_cards.into_iter().sum::<usize>())
 }
